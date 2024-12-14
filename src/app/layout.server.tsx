@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -12,7 +13,9 @@ export default function MetadataWrapper({
 }) {
     return (
         <html lang="en">
-            <body>{children}</body>
+
+                <body>{children}</body>
+
         </html>
     );
 }
