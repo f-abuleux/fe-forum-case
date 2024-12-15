@@ -9,17 +9,23 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
 import { Lock, Mail } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LoginPage() {
 
     const fetchLogin = async (data: Ilogin, action: FormikHelpers<Ilogin>) => {
+        const { result, ok } = await loginUser(data)
         try {
-            const { result, ok } = await loginUser(data)
-            if (!ok) throw "DATA TIDAK OKE"
+            if (result.status !== "ok") throw "DATA TIDAK OKE"
+            console.log("OK", ok)
             createCookies("token", result.token)
+            toast.success('Login successful!');
         } catch (error) {
+            toast.error(result.status)
             console.log("PESAN : " + error)
         }
+
     }
 
     const initialValues = {
@@ -42,6 +48,7 @@ export default function LoginPage() {
                         onSubmit={(values, action) => {
                             console.log(values)
                             fetchLogin(values, action)
+
                         }}
                     >
                         {({ isSubmitting }) => (
@@ -53,14 +60,14 @@ export default function LoginPage() {
                                             placeholder="nama@example.com"
                                             type="email" name="email"
                                         />
-                                        <ErrorMessage name="email" component={'div'} className="absolute"/>
+                                        <ErrorMessage name="email" component={'div'} className="absolute" />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
                                     <div className="relative">
                                         <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                                         <Field name="password" type="password" className="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-all duration-300" />
-                                        <ErrorMessage name="password" component={'div'} className="absolute"/>
+                                        <ErrorMessage name="password" component={'div'} className="absolute" />
                                     </div>
                                 </div>
                                 <button

@@ -6,6 +6,9 @@ import "./globals.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { ThemeProvider } from "next-themes";
+import { Bounce, ToastContainer } from "react-toastify";
+
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,11 +35,46 @@ export default function RootLayout({
   return (
     <Provider store={store}>
       <html lang="en">
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-            <ThemeProvider>{children}</ThemeProvider>
-          </body>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          {/* <ThemeProvider> */}
+          {children}
+          {/* </ThemeProvider> */}
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            limit={3}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            transition={Bounce}
+            theme="dark"
+            style={{
+              width: 200,
+              fontSize: 11,
+              textAlign: "center",
+              padding: "10px",
+              justifyItems : "center"
+            }}
+            closeButton={false}
+            // icon={false}
+            toastStyle={{
+              padding: 0,
+              margin: 5,
+              height: 10,
+              minHeight: "35px",
+              maxHeight: "35px",
+              fontSize: "12px",
+              textAlign: "center",
+            }}
+
+          />
+        </body>
       </html>
     </Provider>
   );

@@ -1,17 +1,29 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
 import { ThemeToggle } from "@/components/theme-toggle"
 import { User, Mail, Lock } from 'lucide-react'
-import { Field, Form, Formik } from 'formik'
+import { Field, Form, Formik, FormikHelpers } from 'formik'
 import { registerSchema } from '@/components/schema/schema'
+import { IRegister } from '@/components/types/types'
+import { registerUser } from '@/components/libs/fetchdata'
+import { toast } from 'react-toastify'
 
 export default function RegisterPage() {
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+
+    const fetchDataRegister = async (data: IRegister, action: FormikHelpers<IRegister>) => {
+        const { result, ok } = await registerUser(data)
+        try {
+            if(!ok) throw toast.error(result.status)
+            console.log(ok)
+            console.log(result)
+            toast.success('Register successful!');
+        } catch (error) {
+            toast.error(`${result.status}`)
+            console.log("PESAN :", error)
+        }
+    }
+
 
     const initialValues = {
         email: "",
@@ -32,6 +44,7 @@ export default function RegisterPage() {
                         initialValues={initialValues}
                         validationSchema={registerSchema}
                         onSubmit={(values, action) => {
+                            fetchDataRegister(values, action)
                             console.log(values)
                         }}
                     >
