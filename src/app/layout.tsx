@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { ThemeProvider } from "next-themes";
 import { Bounce, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -55,7 +56,7 @@ export default function RootLayout({
             transition={Bounce}
             theme="dark"
             style={{
-              width: 200,
+              width: 275,
               fontSize: 11,
               textAlign: "center",
               padding: "10px",

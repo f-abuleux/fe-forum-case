@@ -1,6 +1,7 @@
 "use client"
 
 import { createCookies } from "@/components/actions/createToken"
+import { loginWithGoogle } from "@/components/libs/auth"
 import { loginUser } from "@/components/libs/fetchdata"
 import { loginSchema } from "@/components/schema/schema"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -8,9 +9,9 @@ import { Ilogin } from "@/components/types/types"
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
 import { Lock, Mail } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
-import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { FaGoogle } from "react-icons/fa";
+
 
 export default function LoginPage() {
 
@@ -25,8 +26,17 @@ export default function LoginPage() {
             toast.error(result.status)
             console.log("PESAN : " + error)
         }
-
     }
+
+    const handleGoogleLogin = async () => {
+        const result = await loginWithGoogle();
+        if (result.success) {
+            toast.success('Login with Google successful!');
+            console.log('User Info:', result.user);
+        } else {
+            toast.error(result.message);
+        }
+    };
 
     const initialValues = {
         email: "",
@@ -48,7 +58,7 @@ export default function LoginPage() {
                         onSubmit={(values, action) => {
                             console.log(values)
                             fetchLogin(values, action)
-
+                            action.resetForm()
                         }}
                     >
                         {({ isSubmitting }) => (
@@ -60,14 +70,14 @@ export default function LoginPage() {
                                             placeholder="nama@example.com"
                                             type="email" name="email"
                                         />
-                                        <ErrorMessage name="email" component={'div'} className="absolute" />
+                                        <ErrorMessage name="email" component={'div'} className="absolute text-[12px]" />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
                                     <div className="relative">
                                         <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                                         <Field name="password" type="password" className="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-all duration-300" />
-                                        <ErrorMessage name="password" component={'div'} className="absolute" />
+                                        <ErrorMessage name="password" component={'div'} className="absolute text-[12px]" />
                                     </div>
                                 </div>
                                 <button
@@ -76,7 +86,15 @@ export default function LoginPage() {
                                 >
                                     Masuk
                                 </button>
+                                <div className='border-[1px] w-full '></div>
+                                <button
+                                    onClick={handleGoogleLogin}
+                                    className="w-full p-2 flex items-center gap-2 justify-center border-[1px] text-black rounded-lg">
+                                    <span><FaGoogle/></span>
+                                    <p>Login with Google</p>
+                                </button>
                             </Form>
+
                         )}
                     </Formik>
                     <p className="text-sm text-center text-gray-600 dark:text-gray-400">

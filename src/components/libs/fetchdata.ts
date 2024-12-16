@@ -24,5 +24,6 @@ export const registerUser = async (data : IRegister) => {
     })
 
     const response = await fetchData.json()
+    console.log(response)
     return { result : response, ok : fetchData.ok}
 }
