@@ -10,11 +10,14 @@ import { getAnalytics } from "firebase/analytics";
 // Initialize Firebase
 
 
+
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
+const googleApi = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+
 const firebaseConfig = {
-    apiKey: "AIzaSyB7aCnmhfX6swmFIMDhMWhqGGV8BvCwgF8",
+    apiKey: googleApi,
     authDomain: "farum-42b24.firebaseapp.com",
     projectId: "farum-42b24",
     storageBucket: "farum-42b24.firebasestorage.app",
