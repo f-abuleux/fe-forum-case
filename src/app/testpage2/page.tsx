@@ -10,7 +10,7 @@ export default function TestPage2() {
 
     return (
         <div>
-            <div className='w-full items-center gap-5 flex justify-start'>
+            <div className='w-full items-center gap-5 flex justify-start font-'>
                 <h1>Home Page</h1>
                 <p>Count: {count}</p>
 

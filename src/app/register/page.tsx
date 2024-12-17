@@ -11,10 +11,12 @@ import { toast } from 'react-toastify'
 
 import { FaGoogle } from 'react-icons/fa'
 import { loginWithGoogle } from '@/components/libs/auth'
+import { useRouter } from 'next/navigation'
 
 
 
 export default function RegisterPage() {
+    const router = useRouter()
 
     const fetchDataRegister = async (data: IRegister, action: FormikHelpers<IRegister>) => {
         const { result, ok } = await registerUser(data)
@@ -23,6 +25,7 @@ export default function RegisterPage() {
             console.log(ok)
             console.log("Result : ", result)
             toast.success(result.status)
+            // router.push("/beranda")
         } catch (error) {
             toast.error(result.status)
             console.log("PESAN :", error)
@@ -34,6 +37,7 @@ export default function RegisterPage() {
             if (result.success) {
                 toast.success('Login with Google successful!');
                 console.log('User Info:', result.user);
+                // router.push("/berando")
             } else {
                 toast.error(result.message);
             }

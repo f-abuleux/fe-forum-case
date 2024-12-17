@@ -11,9 +11,12 @@ import { Lock, Mail } from "lucide-react"
 import Link from "next/link"
 import { toast } from 'react-toastify';
 import { FaGoogle } from "react-icons/fa";
+import { useRouter } from "next/navigation"
 
 
 export default function LoginPage() {
+    // const router = useRouter()
+    const router = useRouter()
 
     const fetchLogin = async (data: Ilogin, action: FormikHelpers<Ilogin>) => {
         const { result, ok } = await loginUser(data)
@@ -22,6 +25,7 @@ export default function LoginPage() {
             console.log("OK", ok)
             createCookies("token", result.token)
             toast.success('Login successful!');
+            router.push('/berando')
         } catch (error) {
             toast.error(result.status)
             console.log("PESAN : " + error)
@@ -33,6 +37,7 @@ export default function LoginPage() {
         if (result.success) {
             toast.success('Login with Google successful!');
             console.log('User Info:', result.user);
+            router.push('/berando')
         } else {
             toast.error(result.message);
         }

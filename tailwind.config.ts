@@ -17,7 +17,12 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		}, 
+		fontFamily : {
+			geist: ['var(--font-geist-sans)'],
+			geistMono: ['var(--font-geist-mono)'],
+			manrope: ['var(--font-manrope)'],
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

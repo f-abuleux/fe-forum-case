@@ -1,13 +1,13 @@
 "use client"
 
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import { ThemeProvider } from "next-themes";
 import { Bounce, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Header from "@/components/header";
+import { Manrope } from "next/font/google";
 
 
 
@@ -21,6 +21,12 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const manrope = Manrope({
+  subsets: ['latin'], 
+  variable: '--font-manrope',
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
 });
 
 // export const metadata: Metadata = {
@@ -37,9 +43,10 @@ export default function RootLayout({
     <Provider store={store}>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} font-manrope antialiased`}
         >
           {/* <ThemeProvider> */}
+          <Header/> 
           {children}
           {/* </ThemeProvider> */}
           <ToastContainer
