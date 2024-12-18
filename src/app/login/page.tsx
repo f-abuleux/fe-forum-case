@@ -2,16 +2,17 @@
 
 import { createCookies } from "@/components/actions/createToken"
 import { loginWithGoogle } from "@/components/libs/auth"
-import { loginUser } from "@/components/libs/fetchdata"
+import { loginUser, registerUser } from "@/components/libs/fetchdata"
 import { loginSchema } from "@/components/schema/schema"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Ilogin } from "@/components/types/types"
+import { Ilogin, IRegister } from "@/components/types/types"
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
 import { Lock, Mail } from "lucide-react"
 import Link from "next/link"
 import { toast } from 'react-toastify';
 import { FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation"
+import generatePassword from "@/components/actions/passwordGenerator"
 
 
 export default function LoginPage() {
@@ -33,13 +34,22 @@ export default function LoginPage() {
     }
 
     const handleGoogleLogin = async () => {
-        const result = await loginWithGoogle();
-        if (result.success) {
+        const resultGoogle = await loginWithGoogle();
+        if (resultGoogle.success) {
+            const resultSignIn: IRegister = {
+                email: resultGoogle.user?.email || "",
+                username: resultGoogle.user?.displayName || "",
+                password: generatePassword()
+            }
+            const { result, ok } = await registerUser(resultSignIn)
+            console.log(ok)
+            console.log("Result : ", result)
+            toast.success(result.status)
             toast.success('Login with Google successful!');
-            console.log('User Info:', result.user);
+            console.log('User Info:', resultGoogle.user?.displayName);
             router.push('/berando')
         } else {
-            toast.error(result.message);
+            toast.error(resultGoogle.message);
         }
     };
 
@@ -49,7 +59,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-900 dark:to-gray-800 transition-all duration-300">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 transition-all duration-300">
             <div className="w-full max-w-md bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg rounded-2xl p-8">
                 <div className="space-y-6">
                     <div className="flex justify-between items-center">
@@ -95,7 +105,7 @@ export default function LoginPage() {
                                 <button
                                     onClick={handleGoogleLogin}
                                     className="w-full p-2 flex items-center gap-2 justify-center border-[1px] text-black rounded-lg">
-                                    <span><FaGoogle/></span>
+                                    <span><FaGoogle /></span>
                                     <p>Login with Google</p>
                                 </button>
                             </Form>

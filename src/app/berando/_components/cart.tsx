@@ -21,7 +21,7 @@ export default function CartPost() {
                 <p className="mt-2 pr-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio, nisi in libero quis at excepturi quasi, nihil aliquid sunt soluta doloremque deleniti blanditiis perferendis, ex similique totam. Nisi quia delectus doloremque explicabo cupiditate accusantium ut adipisci neque, placeat ipsa iste inventore voluptatum eligendi praesentium vitae eum fugiat sequi. Iure, ad!</p>
                 <div className="border-[1px] w-full mt-2"></div>
                 <div className="flex items-center mt-2 gap-10 text-[20px]">
-                    <p><IoIosHeartEmpty size={22} /></p>
+                    <p><IoIosHeartEmpty size={22}/></p>
                     <p><FaRegComment size={20}/></p>
                     <p><IoShareSocialOutline size={20}/></p>
                 </div>

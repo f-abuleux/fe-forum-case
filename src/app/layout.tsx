@@ -46,7 +46,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} font-manrope antialiased`}
         >
           {/* <ThemeProvider> */}
-          <Header/> 
+           
           {children}
           {/* </ThemeProvider> */}
           <ToastContainer
